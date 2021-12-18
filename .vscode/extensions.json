@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "mgmcdermott.vscode-language-babel",
+    "visualstudioexptteam.vscodeintellicode",
+    "pkief.material-icon-theme"
+  ]
+}
