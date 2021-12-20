@@ -12,7 +12,7 @@ class Sprite {
    * @param {String} config.src
    * @param {Number} config.squareSize
    * @param {GameObject} config.gameObject
-   * @param {{x: Number, y: Number} | null} config.removeSquareSize
+   * @param {{  x: Number, y: Number} | null} config.removeSquareSize
    * @param {Boolean} config.useShadow
    */
   constructor(config) {
@@ -62,8 +62,8 @@ class Sprite {
    * @param {CanvasRenderingContext2D} ctx
    */
   draw(ctx) {
-    this.x = this.gameObject.x * 16 - this.removeSquareSize.x; // Remove Unnecessary width
-    this.y = this.gameObject.y * 16 - this.removeSquareSize.y; // Remove Unnecessary height
+    const x = this.gameObject.x - this.removeSquareSize.x; // Remove Unnecessary width
+    const y = this.gameObject.y - this.removeSquareSize.y; // Remove Unnecessary height
 
     // When Image Loading
     this.imageIsLoaded &&
@@ -73,8 +73,8 @@ class Sprite {
         0, // Y from Image
         this.squareSize, // Width From Image,
         this.squareSize, // Height From Image
-        this.x, // X for Canvas
-        this.y, // Y for Canvas
+        x, // X for Canvas
+        y, // Y for Canvas
         this.squareSize, // Width For Canvas
         this.squareSize // Height For Canvas
       );
@@ -82,8 +82,8 @@ class Sprite {
     this.shadowImageLoaded &&
       ctx.drawImage(
         this.shadowImage, // Insert Image
-        this.x, // X for Canvas
-        this.y // Y for Canvas
+        x, // X for Canvas
+        y // Y for Canvas
       );
   }
 }

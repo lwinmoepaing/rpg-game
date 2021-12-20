@@ -1,6 +1,8 @@
-import { drawImage } from "../utils/helper";
+import { OverWorldMapsList } from "../Data/AllMapList";
 import GameObject from "./GameObject";
-import OverWorldMap, { OverWorldMapsList } from "./OverWorldMap";
+import Person from "./Person";
+import OverWorldMap from "./OverWorldMap";
+import DirectionInput from "./DirectionInput";
 
 class OverWorld {
   /**
@@ -25,13 +27,6 @@ class OverWorld {
     this.map = null;
   }
 
-  init() {
-    console.log(`Class ${this.constructor.name} is initialize now .`);
-    this.map = new OverWorldMap(OverWorldMapsList.Kitchen);
-    // Start Game Loop
-    this.startGameLoop();
-  }
-
   startGameLoop() {
     const step = () => {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -41,10 +36,12 @@ class OverWorld {
 
       Object.values(this.map.gameObjects).forEach(
         /**
-         * @param {GameObject} obj
+         * @param {GameObject | Person} obj
          */
         (obj) => {
-          obj.x += 0.03;
+          obj.update({
+            arrow: this.directionController.direction,
+          });
           obj.sprite.draw(this.ctx);
         }
       );
@@ -57,6 +54,16 @@ class OverWorld {
     };
 
     step();
+  }
+
+  init() {
+    this.map = new OverWorldMap(OverWorldMapsList.DemoRoom);
+
+    this.directionController = new DirectionInput();
+    this.directionController.init();
+
+    // Start Game Loop
+    this.startGameLoop();
   }
 }
 

@@ -7,3 +7,7 @@ export const drawImage = (src, cb) => {
   };
   img.src = src;
 };
+
+export const withGrids = (n) => {
+  return n * 16;
+};
