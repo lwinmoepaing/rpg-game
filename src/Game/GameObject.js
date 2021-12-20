@@ -1,16 +1,23 @@
+import Sprite from "./Sprite";
+
 /**
  * @name GameObject
- *
  */
 class GameObject {
   /**
    * @param {Object} config
-   * @param {String} config.name
-   * @param {String} config.age
+   * @param {Number} config.x
+   * @param {Number} config.y
+   * @param {String} config.src
    */
   constructor(config) {
-    this.name = config.name;
-    this.agec = config.age;
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.sprite = new Sprite({
+      gameObject: this,
+      src: config.src,
+      useShadow: true,
+    });
   }
 }
 

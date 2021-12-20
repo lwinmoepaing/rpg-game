@@ -1,33 +1,26 @@
 /* Common */
 * {
-  padding: 0;
-  margin: 0;
   box-sizing: border-box;
 }
 
 body {
   overflow: hidden;
-  background-color: orangered;
+  background-color: #ccc;
+  padding: 0;
+  margin: 0;
 }
 
 .game-container {
-  outline: 1px solid white;
+  position: relative;
   width: 352px;
   height: 198px;
-  position: relative;
   margin: 0 auto;
-  margin-top: 20px;
-  display: block;
+  outline: 1px solid #fff;
+
+  transform: scale(2.6) translateY(50%);
 }
 
-.game-canvas {
+.game-container canvas {
   /* background-color: #fff; */
-}
-
-.human {
-  width: 64px;
-  height: 64px;
-  object-fit: none;
-  object-position: 0px 0px;
-  /* image-rendering: pixelated; */
+  image-rendering: pixelated;
 }
