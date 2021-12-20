@@ -1,3 +1,7 @@
-import DrawImage from "./Tutorial/DrawImage";
+import OverWorld from "./Game/OverWorld";
 
-DrawImage();
+const wolrd = new OverWorld({
+  element: document.querySelector(".game-container"),
+});
+
+wolrd.init();
