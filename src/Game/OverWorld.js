@@ -1,5 +1,6 @@
 import { drawImage } from "../utils/helper";
 import GameObject from "./GameObject";
+import OverWorldMap, { OverWorldMapsList } from "./OverWorldMap";
 
 class OverWorld {
   /**
@@ -17,42 +18,45 @@ class OverWorld {
     this.canvas = this.element.querySelector(".game-canvas"); //HTMLCanvasElement
 
     this.ctx = this.canvas.getContext("2d");
+
+    /**
+     * @type {OverWorldMap | null}
+     */
+    this.map = null;
   }
 
   init() {
     console.log(`Class ${this.constructor.name} is initialize now .`);
-
-    // Draw Map
-    this.drawMap();
-
-    // After Drawing Map, Draw Characters
-    this.drawCharacters();
+    this.map = new OverWorldMap(OverWorldMapsList.Kitchen);
+    // Start Game Loop
+    this.startGameLoop();
   }
 
-  drawMap() {
-    drawImage("/public/images/maps/DemoLower.png", (mapImage) => {
-      this.ctx.drawImage(mapImage, 0, 0);
-    });
-  }
+  startGameLoop() {
+    const step = () => {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-  drawCharacters() {
-    // Place GameObject
-    const hero = new GameObject({
-      x: 5,
-      y: 6,
-      src: "/public/images/characters/people/hero.png",
-    });
+      // Clear Canvas
+      this.map.drawLowerImage(this.ctx);
 
-    const npc1 = new GameObject({
-      x: 7,
-      y: 9,
-      src: "/public/images/characters/people/npc1.png",
-    });
+      Object.values(this.map.gameObjects).forEach(
+        /**
+         * @param {GameObject} obj
+         */
+        (obj) => {
+          obj.x += 0.03;
+          obj.sprite.draw(this.ctx);
+        }
+      );
 
-    setTimeout(() => {
-      hero.sprite.draw(this.ctx);
-      npc1.sprite.draw(this.ctx);
-    }, 100);
+      this.map.drawUpperImage(this.ctx);
+
+      requestAnimationFrame(() => {
+        step();
+      });
+    };
+
+    step();
   }
 }
 

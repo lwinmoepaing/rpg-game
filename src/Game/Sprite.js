@@ -23,10 +23,13 @@ class Sprite {
       : { x: 8, y: 18 };
 
     // Setup the image
-    drawImage(config.src, (image) => {
-      this.image = image;
-      this.imageIsLoaded = true;
-    });
+    drawImage(
+      config.src || "/public/images/characters/people/hero.png",
+      (image) => {
+        this.image = image;
+        this.imageIsLoaded = true;
+      }
+    );
 
     // Shadow Image
     this.useShadow = config.useShadow || false;

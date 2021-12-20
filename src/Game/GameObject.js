@@ -9,6 +9,7 @@ class GameObject {
    * @param {Number} config.x
    * @param {Number} config.y
    * @param {String} config.src
+   * @param {Boolean | null} config.useShadow
    */
   constructor(config) {
     this.x = config.x || 0;
@@ -16,7 +17,10 @@ class GameObject {
     this.sprite = new Sprite({
       gameObject: this,
       src: config.src,
-      useShadow: true,
+      useShadow:
+        config.useShadow !== null || config.useShadow !== undefined
+          ? config.useShadow
+          : true,
     });
   }
 }
