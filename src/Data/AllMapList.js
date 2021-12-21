@@ -13,11 +13,11 @@ export const OverWorldMapsList = {
         y: withGrids(6),
         src: "/public/images/characters/people/hero.png",
       }),
-      npc1: new GameObject({
-        x: withGrids(7),
-        y: withGrids(9),
-        src: "/public/images/characters/people/npc1.png ",
-      }),
+      // npc1: new GameObject({
+      //   x: withGrids(7),
+      //   y: withGrids(9),
+      //   src: "/public/images/characters/people/npc1.png ",
+      // }),
     },
   },
 
@@ -25,20 +25,20 @@ export const OverWorldMapsList = {
     lowerSrc: "/public/images/maps/KitchenLower.png",
     upperSrc: "/public/images/maps/KitchenUpper.png",
     gameObjects: {
-      hero: new GameObject({
-        x: withGrids(3),
-        y: withGrids(5),
-      }),
-      npc1: new GameObject({
-        x: withGrids(9),
-        y: withGrids(6),
-        src: "/public/images/characters/people/npc2.png ",
-      }),
-      npc3: new GameObject({
-        x: withGrids(10),
-        y: withGrids(8),
-        src: "/public/images/characters/people/npc3.png ",
-      }),
+      // hero: new GameObject({
+      //   x: withGrids(3),
+      //   y: withGrids(5),
+      // }),
+      // npc1: new GameObject({
+      //   x: withGrids(9),
+      //   y: withGrids(6),
+      //   src: "/public/images/characters/people/npc2.png ",
+      // }),
+      // npc3: new GameObject({
+      //   x: withGrids(10),
+      //   y: withGrids(8),
+      //   src: "/public/images/characters/people/npc3.png ",
+      // }),
     },
   },
 };

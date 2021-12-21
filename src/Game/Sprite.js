@@ -8,10 +8,11 @@ class Sprite {
   /**
    * @param {Object} config
    * @param {Object} config.animations
-   * @param {'idleDown'| 'walkDown' | null} config.currentAnimation
+   * @param {'idleDown' | 'idleRight' | 'idleUp' | 'idleLeft' | 'walkDown' |'walkRight' | 'walkUp' | 'walkLeft' } config.currentAnimation
    * @param {String} config.src
    * @param {Number} config.squareSize
    * @param {GameObject} config.gameObject
+   * @param {Number | null} config.animationFrameLimit
    * @param {{  x: Number, y: Number} | null} config.removeSquareSize
    * @param {Boolean} config.useShadow
    */
@@ -43,18 +44,73 @@ class Sprite {
     // Confiure Animation And Initial State
     this.animations = config.animations || {
       idleDown: [[0, 0]],
+      idleRight: [[0, 1]],
+      idleUp: [[0, 2]],
+      idleLeft: [[0, 3]],
       walkDown: [
-        [0, 0], // image row 1 col 1
-        [1, 0], // image row 1 col 2
-        [2, 0], // image row 1 col 3
+        [1, 0], // image row 1 col 1
+        [0, 0], // image row 1 col 2
         [3, 0], // image row 1 col 4
+        [0, 0], // image row 1 col 2
+      ],
+      walkRight: [
+        [1, 1], // image row 1 col 1
+        [0, 1], // image row 1 col 2
+        [3, 1], // image row 1 col 4
+        [0, 1], // image row 1 col 2
+      ],
+      walkUp: [
+        [1, 2], // image row 1 col 1
+        [0, 2], // image row 1 col 2
+        [3, 2], // image row 1 col 4
+        [0, 2], // image row 1 col 2
+      ],
+      walkLeft: [
+        [1, 3], // image row 1 col 1
+        [0, 3], // image row 1 col 2
+        [3, 3], // image row 1 col 4
+        [0, 3], // image row 1 col 2
       ],
     };
+
+    // Set Animation Frame
     this.currentAnimation = config.currentAnimation || "idleDown";
     this.currentAnimationFrame = 0;
+    this.animationFrameLimit = config.animationFrameLimit || 10;
+    this.animationFrameProgress = this.animationFrameLimit;
 
+    console.log(" this.animationFrameProgress", this.animationFrameProgress);
     //
     this.gameObject = config.gameObject;
+  }
+
+  // Get Current Animation Frame
+  get frame() {
+    return this.animations[this.currentAnimation][this.currentAnimationFrame];
+  }
+
+  setAnimation(key) {
+    if (this.currentAnimation !== key) {
+      this.currentAnimation = key;
+      this.currentAnimationFrame = 0;
+      this.animationFrameProgress = this.animationFrameLimit;
+    }
+  }
+
+  updateAnimationProgress() {
+    // Downtick Frame Progress
+    if (this.animationFrameProgress > 0) {
+      this.animationFrameProgress -= 1;
+      return;
+    }
+
+    // Reset the counter
+    this.animationFrameProgress = this.animationFrameLimit;
+    this.currentAnimationFrame += 1;
+
+    if (this.frame === undefined) {
+      this.currentAnimationFrame = 0;
+    }
   }
 
   /**
@@ -64,13 +120,18 @@ class Sprite {
   draw(ctx) {
     const x = this.gameObject.x - this.removeSquareSize.x; // Remove Unnecessary width
     const y = this.gameObject.y - this.removeSquareSize.y; // Remove Unnecessary height
+    const [frameX, frameY] = this.frame;
+    // console.log(this.frame);
+
+    // console.log("FrameX", frameX);
+    // console.log("FrameY", frameY);
 
     // When Image Loading
     this.imageIsLoaded &&
       ctx.drawImage(
         this.image, // Insert Image
-        0, // X from Image
-        0, // Y from Image
+        frameX * 32, // X from Image
+        frameY * 32, // Y from Image
         this.squareSize, // Width From Image,
         this.squareSize, // Height From Image
         x, // X for Canvas
@@ -78,6 +139,9 @@ class Sprite {
         this.squareSize, // Width For Canvas
         this.squareSize // Height For Canvas
       );
+
+    // Call Animation
+    this.updateAnimationProgress();
 
     this.shadowImageLoaded &&
       ctx.drawImage(
