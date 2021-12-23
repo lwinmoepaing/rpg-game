@@ -1,3 +1,5 @@
+import constants from "../Data/constants";
+
 export const drawImage = (src, cb) => {
   const img = new Image();
   img.onload = () => {
@@ -9,9 +11,9 @@ export const drawImage = (src, cb) => {
 };
 
 export const withGrids = (n) => {
-  return n * 16;
+  return n * constants.halfSquareSize;
 };
 
 export const asGridCoord = (x, y) => {
-  return `${x * 16}, ${y * 16}`;
+  return `${x * constants.halfSquareSize}, ${y * constants.halfSquareSize}`;
 };

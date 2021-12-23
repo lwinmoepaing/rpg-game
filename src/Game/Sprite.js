@@ -1,3 +1,4 @@
+import constants from "../Data/constants";
 import { drawImage, withGrids } from "../utils/helper";
 import GameObject from "./GameObject";
 
@@ -18,7 +19,7 @@ class Sprite {
    */
   constructor(config) {
     // SquareSize Default 32
-    this.squareSize = config.squareSize || 32;
+    this.squareSize = config.squareSize || constants.squareSize;
     this.removeSquareSize = config.removeSquareSize
       ? config.removeSquareSize
       : { x: 8, y: 18 };
@@ -139,8 +140,8 @@ class Sprite {
     this.imageIsLoaded &&
       ctx.drawImage(
         this.image, // Insert Image
-        frameX * 32, // X from Image
-        frameY * 32, // Y from Image
+        frameX * constants.squareSize, // X from Image
+        frameY * constants.squareSize, // Y from Image
         this.squareSize, // Width From Image,
         this.squareSize, // Height From Image
         x, // X for Canvas

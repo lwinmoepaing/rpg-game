@@ -1,3 +1,4 @@
+import constants from "../Data/constants";
 import GameObject from "./GameObject";
 
 class Person extends GameObject {
@@ -34,7 +35,7 @@ class Person extends GameObject {
       state.arrow
     ) {
       this.direction = state.arrow;
-      this.movingProgressRemainig = 16;
+      this.movingProgressRemainig = constants.movingProgress;
     }
   }
 
