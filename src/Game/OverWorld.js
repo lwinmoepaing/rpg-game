@@ -29,11 +29,13 @@ class OverWorld {
 
   startGameLoop() {
     const step = () => {
+      // Clear Of The Canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      // Clear Canvas
-      this.map.drawLowerImage(this.ctx);
+      // Camera
+      const cameraPerson = this.map.gameObjects.hero;
 
+      // Update All Objects
       Object.values(this.map.gameObjects).forEach(
         /**
          * @param {GameObject | Person} obj
@@ -42,11 +44,23 @@ class OverWorld {
           obj.update({
             arrow: this.directionController.direction,
           });
-          obj.sprite.draw(this.ctx);
         }
       );
 
-      this.map.drawUpperImage(this.ctx);
+      // Draw the Lower Layer
+      this.map.drawLowerImage(this.ctx, cameraPerson);
+
+      // Make Person and Middle Layer
+      Object.values(this.map.gameObjects).forEach(
+        /**
+         * @param {GameObject | Person} obj
+         */
+        (obj) => {
+          obj.sprite.draw(this.ctx, cameraPerson);
+        }
+      );
+
+      this.map.drawUpperImage(this.ctx, cameraPerson);
 
       requestAnimationFrame(() => {
         step();

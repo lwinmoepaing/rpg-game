@@ -1,3 +1,6 @@
+import { withGrids } from "../utils/helper";
+import GameObject from "./GameObject";
+
 /**
  * @name OverWorlMap
  */
@@ -6,6 +9,7 @@ class OverWorldMap {
    * @param {Object} config
    * @param {String} config.lowerSrc
    * @param {String} config.upperSrc
+   * @param {{hero: GameObject, npc1: GameObject, npc2: GameObject}} config.gameObjects
    */
   constructor(config) {
     this.gameObjects = config.gameObjects;
@@ -19,16 +23,26 @@ class OverWorldMap {
 
   /**
    * @param {CanvasRenderingContext2D} ctx
+   * @param {GameObject} cameraPerson
    */
-  drawLowerImage(ctx) {
-    ctx.drawImage(this.lowerLayer, 0, 0);
+  drawLowerImage(ctx, cameraPerson) {
+    ctx.drawImage(
+      this.lowerLayer,
+      withGrids(10.5) - cameraPerson.x,
+      withGrids(6) - cameraPerson.y
+    );
   }
 
   /**
    * @param {CanvasRenderingContext2D} ctx
+   * @param {GameObject} cameraPerson
    */
-  drawUpperImage(ctx) {
-    ctx.drawImage(this.upperLayer, 0, 0);
+  drawUpperImage(ctx, cameraPerson) {
+    ctx.drawImage(
+      this.upperLayer,
+      withGrids(10.5) - cameraPerson.x,
+      withGrids(6) - cameraPerson.y
+    );
   }
 }
 

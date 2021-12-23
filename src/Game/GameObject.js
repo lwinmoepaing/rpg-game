@@ -15,16 +15,17 @@ class GameObject {
    * @param {{x: Number, y: Number} | null} config.removeSquareSize
    */
   constructor(config) {
+    const isUseShadow =
+      config.useShadow !== null && config.useShadow !== undefined
+        ? config.useShadow
+        : true;
     this.x = config.x || 0;
     this.y = config.y || 0;
     this.direction = config.direction || "down";
     this.sprite = new Sprite({
       gameObject: this,
       src: config.src,
-      useShadow:
-        config.useShadow !== null || config.useShadow !== undefined
-          ? config.useShadow
-          : true,
+      useShadow: isUseShadow,
       squareSize: config.squareSize ? config.squareSize : 32,
       removeSquareSize: config.removeSquareSize
         ? config.removeSquareSize

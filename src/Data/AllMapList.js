@@ -1,6 +1,6 @@
 import GameObject from "../Game/GameObject";
 import Person from "../Game/Person";
-import { withGrids } from "../utils/helper";
+import { asGridCoord, withGrids } from "../utils/helper";
 
 export const OverWorldMapsList = {
   DemoRoom: {
@@ -9,15 +9,21 @@ export const OverWorldMapsList = {
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
-        x: withGrids(5),
-        y: withGrids(6),
+        x: withGrids(2),
+        y: withGrids(4),
         src: "/public/images/characters/people/hero.png",
       }),
-      // npc1: new GameObject({
-      //   x: withGrids(7),
-      //   y: withGrids(9),
-      //   src: "/public/images/characters/people/npc1.png ",
-      // }),
+      npc1: new GameObject({
+        x: withGrids(7),
+        y: withGrids(9),
+        src: "/public/images/characters/people/npc1.png ",
+      }),
+    },
+    walls: {
+      [asGridCoord(7, 6)]: true,
+      [asGridCoord(8, 6)]: true,
+      [asGridCoord(7, 7)]: true,
+      [asGridCoord(8, 7)]: true,
     },
   },
 

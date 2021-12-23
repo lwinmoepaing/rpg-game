@@ -1,4 +1,4 @@
-import { drawImage } from "../utils/helper";
+import { drawImage, withGrids } from "../utils/helper";
 import GameObject from "./GameObject";
 
 /**
@@ -76,7 +76,7 @@ class Sprite {
     // Set Animation Frame
     this.currentAnimation = config.currentAnimation || "idleDown";
     this.currentAnimationFrame = 0;
-    this.animationFrameLimit = config.animationFrameLimit || 10;
+    this.animationFrameLimit = config.animationFrameLimit || 8;
     this.animationFrameProgress = this.animationFrameLimit;
 
     console.log(" this.animationFrameProgress", this.animationFrameProgress);
@@ -116,10 +116,19 @@ class Sprite {
   /**
    * Draw Context
    * @param {CanvasRenderingContext2D} ctx
+   * @param {GameObject} cameraPerson
    */
-  draw(ctx) {
-    const x = this.gameObject.x - this.removeSquareSize.x; // Remove Unnecessary width
-    const y = this.gameObject.y - this.removeSquareSize.y; // Remove Unnecessary height
+  draw(ctx, cameraPerson) {
+    const x =
+      this.gameObject.x -
+      this.removeSquareSize.x +
+      withGrids(10.5) -
+      cameraPerson.x; // Remove Unnecessary width
+    const y =
+      this.gameObject.y -
+      this.removeSquareSize.y +
+      withGrids(6) -
+      cameraPerson.y; // Remove Unnecessary height
     const [frameX, frameY] = this.frame;
     // console.log(this.frame);
 

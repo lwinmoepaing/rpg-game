@@ -11,3 +11,7 @@ export const drawImage = (src, cb) => {
 export const withGrids = (n) => {
   return n * 16;
 };
+
+export const asGridCoord = (x, y) => {
+  return `${x * 16}, ${y * 16}`;
+};
