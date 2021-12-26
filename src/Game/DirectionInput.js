@@ -19,6 +19,7 @@ class DirectionInput {
 
       if (dir && this.heldDirections.indexOf(dir) === -1) {
         this.heldDirections.unshift(dir);
+        // console.log(this.heldDirections);
       }
     });
 
@@ -31,6 +32,9 @@ class DirectionInput {
     });
   }
 
+  /**
+   * @return {Array<'left' | 'right' | 'up' | 'down' >}
+   */
   get direction() {
     return this.heldDirections[0];
   }

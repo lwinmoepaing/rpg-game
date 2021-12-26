@@ -43,6 +43,7 @@ class OverWorld {
         (obj) => {
           obj.update({
             arrow: this.directionController.direction,
+            map: this.map,
           });
         }
       );
@@ -72,6 +73,7 @@ class OverWorld {
 
   init() {
     this.map = new OverWorldMap(OverWorldMapsList.DemoRoom);
+    this.map.mountObjects();
 
     this.directionController = new DirectionInput();
     this.directionController.init();

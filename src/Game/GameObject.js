@@ -1,8 +1,6 @@
+import OverWorldMap from "./OverWorldMap";
 import Sprite from "./Sprite";
 
-/**
- * @name GameObject
- */
 class GameObject {
   /**
    * @param {Object} config
@@ -13,8 +11,12 @@ class GameObject {
    * @param {Boolean | null} config.useShadow
    * @param {Number} config.squareSize
    * @param {{x: Number, y: Number} | null} config.removeSquareSize
+   * @param {Boolean} config.isPlayerControlled
+   * @param {any[]} config.behaviorLoop
    */
   constructor(config) {
+    this.id = config.id ? config.id : null;
+    this.isMounted = false;
     const isUseShadow =
       config.useShadow !== null && config.useShadow !== undefined
         ? config.useShadow
@@ -31,9 +33,48 @@ class GameObject {
         ? config.removeSquareSize
         : { x: 8, y: 18 },
     });
+
+    this.behaviorLoop = config.behaviorLoop ? config.behaviorLoop : [];
+    this.behaviorLoopIndex = 0;
+  }
+
+  /**
+   * @param {OverWorldMap} map
+   */
+  mount(map) {
+    console.log("Mounting");
+    this.isMounted = true;
+    map.addWall(this.x, this.y);
+
+    setTimeout(() => {
+      this.doBehaviorEvent(map);
+    });
   }
 
   update() {}
+
+  /**
+   * @param {OverWorldMap} map
+   */
+  async doBehaviorEvent(map) {
+    let event = this.behaviorLoop[this.behaviorLoopIndex];
+    event.who = this.id;
+    const eventHandler = new OverWorldEvent({ map: map, eventConfig: {} });
+    eventHandler.init();
+  }
 }
 
 export default GameObject;
+
+class OverWorldEvent {
+  /**
+   * @param {Object} config
+   * @param {Object} config.eventConfig
+   * @param {OverWorldMap} config.map
+   */
+  constructor(config) {}
+
+  init() {
+    console.log("Init Event");
+  }
+}

@@ -77,15 +77,19 @@ class Sprite {
     // Set Animation Frame
     this.currentAnimation = config.currentAnimation || "idleDown";
     this.currentAnimationFrame = 0;
-    this.animationFrameLimit = config.animationFrameLimit || 8;
+    this.animationFrameLimit =
+      config.animationFrameLimit || constants.animationFrameLimit;
     this.animationFrameProgress = this.animationFrameLimit;
 
-    console.log(" this.animationFrameProgress", this.animationFrameProgress);
+    // console.log(" this.animationFrameProgress", this.animationFrameProgress);
     //
     this.gameObject = config.gameObject;
   }
 
   // Get Current Animation Frame
+  /**
+   * @return {[Number, Number] | undefined }
+   */
   get frame() {
     return this.animations[this.currentAnimation][this.currentAnimationFrame];
   }
