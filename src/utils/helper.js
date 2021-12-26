@@ -35,3 +35,12 @@ export const nextPosition = (curX, curY, direction) => {
 
   return { x, y };
 };
+
+export const emitEvent = (name, detail) => {
+  // We Finished the walk
+  const event = new CustomEvent(name, {
+    detail,
+  });
+
+  document.dispatchEvent(event);
+};

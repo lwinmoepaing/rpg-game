@@ -21,6 +21,8 @@ class OverWorldMap {
 
     this.upperLayer = new Image();
     this.upperLayer.src = config.upperSrc;
+
+    this.isCutscenePlaying = false;
   }
 
   /**
@@ -59,8 +61,14 @@ class OverWorldMap {
 
   // Mounting Object
   mountObjects() {
-    Object.values(this.gameObjects).map((obj) => {
-      obj.mount(this);
+    // Object.values(this.gameObjects).map((obj) => {
+    //   obj.mount(this);
+    // });
+
+    Object.keys(this.gameObjects).map((key) => {
+      let object = this.gameObjects[key];
+      object.id = key;
+      object.mount(this);
     });
   }
 

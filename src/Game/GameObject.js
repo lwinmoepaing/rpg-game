@@ -1,3 +1,4 @@
+import OverWorldEvent from "./OverWorldEvent";
 import OverWorldMap from "./OverWorldMap";
 import Sprite from "./Sprite";
 
@@ -57,24 +58,19 @@ class GameObject {
    * @param {OverWorldMap} map
    */
   async doBehaviorEvent(map) {
+    if (map.isCutscenePlaying || this.behaviorLoop.length === 0) {
+      return;
+    }
     let event = this.behaviorLoop[this.behaviorLoopIndex];
     event.who = this.id;
-    const eventHandler = new OverWorldEvent({ map: map, eventConfig: {} });
-    eventHandler.init();
+    const eventHandler = new OverWorldEvent({ map: map, eventConfig: event });
+    await eventHandler.init();
+    this.behaviorLoopIndex += 1;
+    if (this.behaviorLoopIndex === this.behaviorLoop.length) {
+      this.behaviorLoopIndex = 0;
+    }
+    this.doBehaviorEvent(map);
   }
 }
 
 export default GameObject;
-
-class OverWorldEvent {
-  /**
-   * @param {Object} config
-   * @param {Object} config.eventConfig
-   * @param {OverWorldMap} config.map
-   */
-  constructor(config) {}
-
-  init() {
-    console.log("Init Event");
-  }
-}
