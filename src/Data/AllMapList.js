@@ -28,8 +28,8 @@ export const OverWorldMapsList = {
         y: withGrids(9),
         src: "/public/images/characters/people/npc1.png ",
         behaviorLoop: [
-          { type: "stand", direction: "left", time: 800 },
-          { type: "stand", direction: "up", time: 800 },
+          { type: "stand", direction: "left", time: 1500 },
+          { type: "stand", direction: "up", time: 1500 },
           { type: "stand", direction: "right", time: 1200 },
           { type: "stand", direction: "up", time: 300 },
         ],

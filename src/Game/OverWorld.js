@@ -52,14 +52,18 @@ class OverWorld {
       this.map.drawLowerImage(this.ctx, cameraPerson);
 
       // Make Person and Middle Layer
-      Object.values(this.map.gameObjects).forEach(
-        /**
-         * @param {GameObject | Person} obj
-         */
-        (obj) => {
-          obj.sprite.draw(this.ctx, cameraPerson);
-        }
-      );
+      Object.values(this.map.gameObjects)
+        .sort((a, b) => {
+          return a.y - b.y;
+        })
+        .forEach(
+          /**
+           * @param {GameObject | Person} obj
+           */
+          (obj) => {
+            obj.sprite.draw(this.ctx, cameraPerson);
+          }
+        );
 
       this.map.drawUpperImage(this.ctx, cameraPerson);
 
@@ -80,6 +84,17 @@ class OverWorld {
 
     // Start Game Loop
     this.startGameLoop();
+
+    // if Cutscene
+    // this.map.startCutScene([
+    //   { who: "hero", type: "walk", direction: "right" },
+    //   { who: "hero", type: "walk", direction: "right" },
+    //   { who: "hero", type: "walk", direction: "right" },
+    //   { who: "hero", type: "walk", direction: "down" },
+    //   { who: "hero", type: "walk", direction: "down" },
+    //   { who: "hero", type: "walk", direction: "down" },
+    //   { who: "hero", type: "stand", direction: "down", time: 1000 },
+    // ]);
   }
 }
 

@@ -1,5 +1,6 @@
 import { nextPosition, withGrids } from "../utils/helper";
 import GameObject from "./GameObject";
+import OverWorldEvent from "./OverWorldEvent";
 
 /**
  * @name OverWorlMap
@@ -73,6 +74,19 @@ class OverWorldMap {
   }
 
   // Map Initialize
+
+  async startCutScene(events) {
+    this.isCutscenePlaying = true;
+    for (let i = 0; i < events.length; i++) {
+      const eventHandler = new OverWorldEvent({
+        eventConfig: events[i],
+        map: this,
+      });
+
+      await eventHandler.init();
+    }
+    this.isCutscenePlaying = false;
+  }
   /**
    * @param {Number} x
    * @param {Number} y
