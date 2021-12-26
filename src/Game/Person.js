@@ -16,6 +16,8 @@ class Person extends GameObject {
 
     this.isPlayerControlled = config.isPlayerControlled || false;
 
+    this.isStanding = false;
+
     this.directionUpdate = {
       up: ["y", -1],
       down: ["y", 1],
@@ -79,8 +81,10 @@ class Person extends GameObject {
     }
 
     if (behavior.type === "stand") {
+      this.isStanding = true;
       setTimeout(() => {
         emitEvent(constants.events.PersonStandComplete, { whoId: this.id });
+        this.isStanding = false;
       }, behavior.time);
     }
   }

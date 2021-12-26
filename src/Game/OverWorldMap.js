@@ -1,6 +1,7 @@
 import { nextPosition, withGrids } from "../utils/helper";
 import GameObject from "./GameObject";
 import OverWorldEvent from "./OverWorldEvent";
+import OverWorld from "./OverWorld";
 
 /**
  * @name OverWorlMap
@@ -11,11 +12,17 @@ class OverWorldMap {
    * @param {String} config.lowerSrc
    * @param {String} config.upperSrc
    * @param {Object} config.walls
+   * @param {Array<{events: *[]}>} config.cutsceneSpaces
    * @param {{hero: GameObject, npc1: GameObject, npc2: GameObject}} config.gameObjects
    */
   constructor(config) {
+    /**
+     * @type {OverWorld}
+     */
+    this.overWorld = null;
     this.gameObjects = config.gameObjects;
     this.walls = config.walls || {};
+    this.cutsceneSpaces = config.cutsceneSpaces || [];
 
     this.lowerLayer = new Image();
     this.lowerLayer.src = config.lowerSrc;
@@ -75,23 +82,44 @@ class OverWorldMap {
 
   // Map Initialize
 
+  checkForActionCutscene() {
+    const hero = this.gameObjects["hero"];
+    const nextCoord = nextPosition(hero.x, hero.y, hero.direction);
+    const match = Object.values(this.gameObjects).find((object) => {
+      return `${object.x},${object.y}` === `${nextCoord.x},${nextCoord.y}`;
+    });
+
+    if (!this.isCutscenePlaying && match && match.talking.length) {
+      this.startCutScene(match.talking[0].events);
+    }
+  }
+
+  checkForFootstepCutscene() {
+    const hero = this.gameObjects["hero"];
+    const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
+    if (!this.isCutscenePlaying && match) {
+      this.startCutScene(match[0].events);
+    }
+  }
+
   async startCutScene(events) {
     this.isCutscenePlaying = true;
     for (let i = 0; i < events.length; i++) {
       const eventHandler = new OverWorldEvent({
-        eventConfig: events[i],
+        event: events[i],
         map: this,
       });
 
       await eventHandler.init();
     }
+
+    Object.keys(this.gameObjects).map((key) => {
+      let object = this.gameObjects[key];
+      object.id = key;
+      object.mount(this);
+    });
     this.isCutscenePlaying = false;
   }
-  /**
-   * @param {Number} x
-   * @param {Number} y
-   */
-  addMap(x, y) {}
 
   // Other Object Walls
   addWall(x, y) {

@@ -44,3 +44,17 @@ export const emitEvent = (name, detail) => {
 
   document.dispatchEvent(event);
 };
+
+export const oppositeDirection = (direction) => {
+  if (direction === "left") {
+    return "right";
+  }
+  if (direction === "right") {
+    return "left";
+  }
+  if (direction === "up") {
+    return "down";
+  }
+
+  return "up";
+};

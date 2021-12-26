@@ -14,6 +14,7 @@ class GameObject {
    * @param {{x: Number, y: Number} | null} config.removeSquareSize
    * @param {Boolean} config.isPlayerControlled
    * @param {any[]} config.behaviorLoop
+   * @param {Array<{events: *[]}>} config.talking
    */
   constructor(config) {
     this.id = config.id ? config.id : null;
@@ -37,13 +38,14 @@ class GameObject {
 
     this.behaviorLoop = config.behaviorLoop ? config.behaviorLoop : [];
     this.behaviorLoopIndex = 0;
+
+    this.talking = config.talking || [];
   }
 
   /**
    * @param {OverWorldMap} map
    */
   mount(map) {
-    console.log("Mounting");
     this.isMounted = true;
     map.addWall(this.x, this.y);
 
@@ -58,12 +60,16 @@ class GameObject {
    * @param {OverWorldMap} map
    */
   async doBehaviorEvent(map) {
-    if (map.isCutscenePlaying || this.behaviorLoop.length === 0) {
+    if (
+      map.isCutscenePlaying ||
+      this.behaviorLoop.length === 0 ||
+      this.isStanding
+    ) {
       return;
     }
     let event = this.behaviorLoop[this.behaviorLoopIndex];
     event.who = this.id;
-    const eventHandler = new OverWorldEvent({ map: map, eventConfig: event });
+    const eventHandler = new OverWorldEvent({ map: map, event: event });
     await eventHandler.init();
     this.behaviorLoopIndex += 1;
     if (this.behaviorLoopIndex === this.behaviorLoop.length) {

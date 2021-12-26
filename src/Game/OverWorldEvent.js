@@ -1,20 +1,26 @@
 import OverWorldMap from "./OverWorldMap";
 import constants from "../Data/constants";
+import { OverWorldMapsList } from "../Data/AllMapList";
+import TextMessage from "./TextMessage";
+import { oppositeDirection } from "../utils/helper";
 
 class OverWorldEvent {
   /**
    * @param {Object} config
-   * @param {Object} config.eventConfig
-   * @param {'walk' | 'stand' } config.eventConfig.type
-   * @param {String} config.eventConfig.who
-   * @param {Number} config.eventConfig.time
-   * @param {'up' | 'down' | 'left' | 'right' } config.eventConfig.direction
    * @param {OverWorldMap} config.map
+   * @param {Object} config.event
+   * @param {'walk' | 'stand' } config.event.type
+   * @param {String} config.event.who
+   * @param {Number} config.event.time
+   * @param {'up' | 'down' | 'left' | 'right' } config.event.direction
+   * @param {String} config.event.text
+   * @param {String} config.event.faceHero
+   * @param {Function} config.event.onComplete
    */
   constructor(config) {
-    const { map, eventConfig } = config;
+    const { map, event } = config;
     this.map = map;
-    this.eventConfig = eventConfig;
+    this.event = event;
   }
 
   /**
@@ -22,25 +28,25 @@ class OverWorldEvent {
    */
   init() {
     return new Promise((resolve) => {
-      this[this.eventConfig.type](resolve);
+      this[this.event.type](resolve);
     });
   }
 
   stand(resolve) {
-    const who = this.map.gameObjects[this.eventConfig.who];
+    const who = this.map.gameObjects[this.event.who];
     who.startBehavior(
       {
         map: this.map,
       },
       {
         type: "stand",
-        direction: this.eventConfig.direction,
-        time: this.eventConfig.time,
+        direction: this.event.direction,
+        time: this.event.time,
       }
     );
 
     const completeHandler = (e) => {
-      if (e.detail.whoId === this.eventConfig.who) {
+      if (e.detail.whoId === this.event.who) {
         document.removeEventListener(
           constants.events.PersonStandComplete,
           completeHandler
@@ -56,20 +62,20 @@ class OverWorldEvent {
   }
 
   walk(resolve) {
-    const who = this.map.gameObjects[this.eventConfig.who];
+    const who = this.map.gameObjects[this.event.who];
     who.startBehavior(
       {
         map: this.map,
       },
       {
         type: "walk",
-        direction: this.eventConfig.direction,
+        direction: this.event.direction,
         retry: true,
       }
     );
 
     const completeHandler = (e) => {
-      if (e.detail.whoId === this.eventConfig.who) {
+      if (e.detail.whoId === this.event.who) {
         document.removeEventListener(
           constants.events.PersonWalkingComplete,
           completeHandler
@@ -82,6 +88,26 @@ class OverWorldEvent {
       constants.events.PersonWalkingComplete,
       completeHandler
     );
+  }
+
+  textMessage(resolve) {
+    if (this.event.faceHero) {
+      const obj = this.map.gameObjects[this.event.faceHero];
+      obj.direction = oppositeDirection(this.map.gameObjects["hero"].direction);
+    }
+
+    const message = new TextMessage({
+      text: this.event.text,
+      onComplete: () => resolve(),
+    });
+
+    const messageContainer = document.querySelector(".game-container");
+    message.init(messageContainer);
+  }
+
+  changeMap(resolve) {
+    this.map.overWorld.startMap(OverWorldMapsList[this.event.map]);
+    resolve();
   }
 }
 

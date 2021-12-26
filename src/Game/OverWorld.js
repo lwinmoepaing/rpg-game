@@ -3,6 +3,8 @@ import GameObject from "./GameObject";
 import Person from "./Person";
 import OverWorldMap from "./OverWorldMap";
 import DirectionInput from "./DirectionInput";
+import KeyPressListener from "./KeyPressListener";
+import constants from "../Data/constants";
 
 class OverWorld {
   /**
@@ -75,9 +77,33 @@ class OverWorld {
     step();
   }
 
-  init() {
-    this.map = new OverWorldMap(OverWorldMapsList.DemoRoom);
+  bindActionInput() {
+    new KeyPressListener("Enter", () => {
+      this.map.checkForActionCutscene();
+    });
+    new KeyPressListener("Space", () => {
+      this.map.checkForActionCutscene();
+    });
+  }
+
+  bindHeroPositionCheck() {
+    document.addEventListener(constants.events.PersonWalkingComplete, (e) => {
+      if (e.detail.whoId === "hero") {
+        this.map.checkForFootstepCutscene();
+      }
+    });
+  }
+
+  startMap(mapConfig) {
+    this.map = new OverWorldMap(mapConfig);
+    this.map.overWorld = this;
     this.map.mountObjects();
+  }
+
+  init() {
+    this.startMap(OverWorldMapsList.DemoRoom);
+    this.bindActionInput();
+    this.bindHeroPositionCheck();
 
     this.directionController = new DirectionInput();
     this.directionController.init();
@@ -86,15 +112,9 @@ class OverWorld {
     this.startGameLoop();
 
     // if Cutscene
-    // this.map.startCutScene([
-    //   { who: "hero", type: "walk", direction: "right" },
-    //   { who: "hero", type: "walk", direction: "right" },
-    //   { who: "hero", type: "walk", direction: "right" },
-    //   { who: "hero", type: "walk", direction: "down" },
-    //   { who: "hero", type: "walk", direction: "down" },
-    //   { who: "hero", type: "walk", direction: "down" },
-    //   { who: "hero", type: "stand", direction: "down", time: 1000 },
-    // ]);
+    this.map.startCutScene([
+      { type: "textMessage", text: "Hello Fintech Game!" },
+    ]);
   }
 }
 

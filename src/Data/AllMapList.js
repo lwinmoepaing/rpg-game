@@ -1,7 +1,5 @@
-import GameObject from "../Game/GameObject";
 import Person from "../Game/Person";
 import { asGridCoord, withGrids } from "../utils/helper";
-
 /**
  * @typedef {Object} RoomObj
  * @property {String} lowerSrc -
@@ -33,18 +31,27 @@ export const OverWorldMapsList = {
           { type: "stand", direction: "right", time: 1200 },
           { type: "stand", direction: "up", time: 300 },
         ],
+        talking: [
+          {
+            events: [
+              { type: "textMessage", text: "I'm Busy", faceHero: "npc1" },
+              { type: "textMessage", text: "Go away!" },
+            ],
+          },
+        ],
       }),
       npc2: new Person({
-        x: withGrids(3),
-        y: withGrids(7),
+        x: withGrids(8),
+        y: withGrids(5),
         src: "/public/images/characters/people/npc2.png ",
-        behaviorLoop: [
-          { type: "walk", direction: "left" },
-          { type: "stand", direction: "up", time: 800 },
-          { type: "walk", direction: "up" },
-          { type: "walk", direction: "right" },
-          { type: "walk", direction: "down" },
-        ],
+        // behaviorLoop: [
+        //   { type: "walk", direction: "left" },
+        //   { type: "stand", direction: "up", time: 800 },
+        //   { type: "walk", direction: "up" },
+        //   { type: "walk", direction: "right" },
+        //   { type: "walk", direction: "down" },
+        // ],
+        talking: [],
       }),
     },
     walls: {
@@ -53,26 +60,49 @@ export const OverWorldMapsList = {
       [asGridCoord(7, 7)]: true,
       [asGridCoord(8, 7)]: true,
     },
+    cutsceneSpaces: {
+      [asGridCoord(7, 4)]: [
+        {
+          events: [
+            { who: "npc2", type: "walk", direction: "left" },
+            { who: "npc2", type: "stand", direction: "up", time: 500 },
+            { type: "textMessage", text: "You can't be in there!" },
+            { who: "npc2", type: "walk", direction: "right" },
+            { who: "npc2", type: "stand", direction: "down" },
+            { who: "hero", type: "walk", direction: "down" },
+            { who: "hero", type: "walk", direction: "left" },
+          ],
+        },
+      ],
+      [asGridCoord(5, 10)]: [
+        {
+          events: [{ type: "changeMap", map: "Kitchen" }],
+        },
+      ],
+    },
   },
 
   Kitchen: {
     lowerSrc: "/public/images/maps/KitchenLower.png",
     upperSrc: "/public/images/maps/KitchenUpper.png",
     gameObjects: {
-      // hero: new GameObject({
-      //   x: withGrids(3),
-      //   y: withGrids(5),
-      // }),
-      // npc1: new GameObject({
-      //   x: withGrids(9),
-      //   y: withGrids(6),
-      //   src: "/public/images/characters/people/npc2.png ",
-      // }),
-      // npc3: new GameObject({
-      //   x: withGrids(10),
-      //   y: withGrids(8),
-      //   src: "/public/images/characters/people/npc3.png ",
-      // }),
+      hero: new Person({
+        isPlayerControlled: true,
+        x: withGrids(3),
+        y: withGrids(5),
+      }),
+      npc3: new Person({
+        x: withGrids(10),
+        y: withGrids(8),
+        src: "/public/images/characters/people/npc3.png ",
+        talking: [
+          {
+            events: [
+              { type: "textMessage", text: "You Made it!!", faceHero: "npc3" },
+            ],
+          },
+        ],
+      }),
     },
   },
 };
