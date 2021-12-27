@@ -1,4 +1,5 @@
 import KeyPressListener from "./KeyPressListener";
+import RevealingText from "./RevealingText";
 
 class TextMessage {
   constructor(config) {
@@ -18,6 +19,11 @@ class TextMessage {
 
     this.element.querySelector("button").addEventListener("click", () => {
       this.done();
+    });
+
+    this.revealingText = new RevealingText({
+      element: this.element.querySelector("TextMessage_p"),
+      text: this.text,
     });
 
     /**
