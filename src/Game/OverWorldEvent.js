@@ -109,6 +109,20 @@ class OverWorldEvent {
     this.map.overWorld.startMap(OverWorldMapsList[this.event.map]);
     resolve();
   }
+
+  openPhone(resolve) {
+    const phone = document.getElementById("uabpayContainer");
+    const cancel = document.getElementById("cancel");
+    const next = document.getElementById("next");
+    phone.style.display = "flex";
+
+    [cancel, next].forEach((el) => {
+      el.onclick = () => {
+        phone.style.display = "none";
+      };
+    });
+    resolve();
+  }
 }
 
 export default OverWorldEvent;

@@ -34,3 +34,170 @@ body {
   /* background-color: #fff; */
   image-rendering: pixelated;
 }
+
+/*  */
+
+.iphone-x {
+  position: relative;
+  margin: -40px auto 0 auto;
+  width: 360px;
+  height: 780px;
+  background-color: #7371ee;
+  background-image: linear-gradient(60deg, #7371ee 1%, #a1d9d6 100%);
+  border-radius: 40px;
+  box-shadow: 0px 0px 0px 11px #1f1f1f, 0px 0px 0px 13px #191919,
+    0px 0px 0px 20px #111;
+}
+.iphone-x:before,
+.iphone-x:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.iphone-x:after {
+  bottom: 7px;
+  width: 140px;
+  height: 4px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+}
+.iphone-x:before {
+  top: 0px;
+  width: 56%;
+  height: 30px;
+  background-color: #1f1f1f;
+  border-radius: 0px 0px 40px 40px;
+}
+.iphone-x i,
+.iphone-x b,
+.iphone-x s,
+.iphone-x span {
+  position: absolute;
+  display: block;
+  color: transparent;
+}
+.iphone-x i {
+  top: 0px;
+  left: 50%;
+  transform: translate(-50%, 6px);
+  height: 8px;
+  width: 15%;
+  background-color: #101010;
+  border-radius: 8px;
+  box-shadow: inset 0px -3px 3px 0px rgba(255, 255, 255, 0.2);
+}
+.iphone-x b {
+  left: 10%;
+  top: 0px;
+  transform: translate(180px, 4px);
+  width: 12px;
+  height: 12px;
+  background-color: #101010;
+  border-radius: 12px;
+  box-shadow: inset 0px -3px 2px 0px rgba(255, 255, 255, 0.2);
+}
+.iphone-x b:after {
+  content: "";
+  position: absolute;
+  background-color: #2d4d76;
+  width: 6px;
+  height: 6px;
+  top: 2px;
+  left: 2px;
+  top: 3px;
+  left: 3px;
+  display: block;
+  border-radius: 4px;
+  box-shadow: inset 0px -2px 2px rgba(0, 0, 0, 0.5);
+}
+.iphone-x s {
+  top: 50px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+  font-size: 70px;
+  font-weight: 100;
+  padding-top: 60px;
+}
+.iphone-x span {
+  bottom: 50px;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  left: 30px;
+}
+.iphone-x span + span {
+  left: auto;
+  right: 30px;
+}
+
+#uabpayContainer {
+  position: absolute;
+  flex: 1;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  display: none;
+}
+
+#uabpayContainer > div {
+  transform: scale(0.65);
+}
+
+.modalContainer {
+  top: 50px;
+  position: relative;
+  /* background: red; */
+  height: 600px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+input {
+  border: 1px solid #dfdfdf;
+  width: 100%;
+  display: block;
+  padding: 14px;
+  box-shadow: 1px 1px 1px #f4a0fcc7;
+  margin: 18px 0;
+  min-width: 280px;
+}
+
+.phoneButtonContainer {
+  display: flex;
+  flex-direction: "row";
+}
+
+.phoneButtonContainer button {
+  flex: 1;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid #dfdfdf;
+  background-color: #a4508b;
+  background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);
+  color: white;
+  padding: 8px 14px;
+}
+
+form {
+  background: #fad0faed;
+  padding: 1rem;
+  border-radius: 8px;
+}
+.iphone-x .hello {
+  top: 50px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+  font-size: 1.6rem;
+  font-weight: 100;
+  padding-top: 60px;
+}

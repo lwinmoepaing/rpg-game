@@ -55,6 +55,34 @@ export const OverWorldMapsList = {
         talking: [],
       }),
     },
+    cutsceneSpaces: {
+      [asGridCoord(1, 2)]: [
+        {
+          events: [{ type: "changeMap", map: "Map2" }],
+        },
+      ],
+      [asGridCoord(1, 4)]: [
+        {
+          events: [{ type: "changeMap", map: "Map2" }],
+        },
+      ],
+      [asGridCoord(1, 6)]: [
+        {
+          events: [{ type: "changeMap", map: "Map2" }],
+        },
+      ],
+
+      [asGridCoord(5, 4)]: [
+        {
+          events: [{ type: "changeMap", map: "Map2" }],
+        },
+      ],
+      [asGridCoord(5, 2)]: [
+        {
+          events: [{ type: "changeMap", map: "Map2" }],
+        },
+      ],
+    },
     walls: {
       [asGridCoord(6, 11)]: true,
       [asGridCoord(7, 11)]: true,
@@ -85,6 +113,7 @@ export const OverWorldMapsList = {
       [asGridCoord(9, 7)]: true,
       [asGridCoord(9, 8)]: true,
       [asGridCoord(9, 9)]: true,
+
       [asGridCoord(9, 10)]: true,
       [asGridCoord(9, 12)]: true,
       [asGridCoord(0, 8)]: true,
@@ -108,34 +137,6 @@ export const OverWorldMapsList = {
       [asGridCoord(4, 14)]: true,
       [asGridCoord(5, 14)]: true,
     },
-    cutsceneSpaces: {
-      [asGridCoord(1, 2)]: [
-        {
-          events: [{ type: "changeMap", map: "Map2" }],
-        },
-      ],
-      [asGridCoord(1, 4)]: [
-        {
-          events: [{ type: "changeMap", map: "Map2" }],
-        },
-      ],
-      [asGridCoord(1, 6)]: [
-        {
-          events: [{ type: "changeMap", map: "Map2" }],
-        },
-      ],
-
-      [asGridCoord(5, 4)]: [
-        {
-          events: [{ type: "changeMap", map: "Map2" }],
-        },
-      ],
-      [asGridCoord(5, 2)]: [
-        {
-          events: [{ type: "changeMap", map: "Map2" }],
-        },
-      ],
-    },
   },
 
   Map2: {
@@ -155,7 +156,12 @@ export const OverWorldMapsList = {
         talking: [
           {
             events: [
-              { type: "textMessage", text: "You Made it!!", faceHero: "npc3" },
+              {
+                type: "textMessage",
+                text: "Do you want coffee?",
+                faceHero: "hero",
+              },
+              { type: "openPhone" },
             ],
           },
         ],
@@ -165,6 +171,32 @@ export const OverWorldMapsList = {
           { type: "stand", direction: "down", time: 4000 },
           { type: "stand", direction: "right", time: 4000 },
           { type: "stand", direction: "down", time: 4000 },
+        ],
+      }),
+      npc4: new Person({
+        x: withGrids(17),
+        y: withGrids(9),
+        direction: "right",
+        src: "/public/images/characters/people/npc4.png ",
+        talking: [
+          {
+            events: [
+              { type: "textMessage", text: "You Made it!!", faceHero: "npc4" },
+            ],
+          },
+        ],
+      }),
+      npc5: new Person({
+        x: withGrids(19),
+        y: withGrids(9),
+        direction: "left",
+        src: "/public/images/characters/people/npc2.png ",
+        talking: [
+          {
+            events: [
+              { type: "textMessage", text: "You Made it!!", faceHero: "npc4" },
+            ],
+          },
         ],
       }),
     },
@@ -323,6 +355,11 @@ export const OverWorldMapsList = {
     },
 
     cutsceneSpaces: {
+      [asGridCoord(17, 13)]: [
+        {
+          events: [{ type: "openPhone" }],
+        },
+      ],
       [asGridCoord(1, 8)]: [
         {
           events: [{ type: "changeMap", map: "DemoRoom" }],

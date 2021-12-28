@@ -101,7 +101,7 @@ class OverWorld {
   }
 
   init() {
-    this.startMap(OverWorldMapsList.DemoRoom);
+    this.startMap(OverWorldMapsList.Map2);
     this.bindActionInput();
     this.bindHeroPositionCheck();
 
